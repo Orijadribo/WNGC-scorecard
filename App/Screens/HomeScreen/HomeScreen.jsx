@@ -3,10 +3,10 @@ import React from "react";
 import Header from "./Header";
 import History from "./History";
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
   return (
     <View style={{ marginTop: 20, paddingHorizontal: 20 }}>
-      <Header />
+      <Header navigation={navigation} />
       <History />
     </View>
   );

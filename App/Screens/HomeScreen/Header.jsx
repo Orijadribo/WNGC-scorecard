@@ -3,9 +3,9 @@ import React from "react";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 
-export default function Header() {
+export default function Header({navigation}) {
   return (
-    <View >
+    <View>
       <View style={{ alignItems: "center" }}>
         <Image
           source={require("../../../assets/WNGC_logo.png")}
@@ -16,7 +16,7 @@ export default function Header() {
       <View style={styles.navBar}>
         <Text>ScoreCards</Text>
         <View style={styles.navBarIcons}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("addCard")}>
             <FontAwesome6 name="plus" size={24} color="black" />
           </TouchableOpacity>
           <TouchableOpacity>

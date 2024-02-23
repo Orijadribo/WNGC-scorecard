@@ -7,12 +7,17 @@ import Course from "../Screens/Course/Course";
 import { FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome6 } from "@expo/vector-icons";
+import StackNavigation from "./StackNavigation";
+import CardSetUp from "../Screens/NewCard/CardSetUp";
 
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigation() {
   return (
-    <Tab.Navigator screenOptions={{headerShown:false}} initialRouteName="Home">
+    <Tab.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="Home"
+    >
       <Tab.Screen
         name="Players"
         component={Players}
@@ -29,7 +34,7 @@ export default function TabNavigation() {
       />
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={StackNavigation}
         options={{
           tabBarLabel: ({ color }) => (
             <Text style={{ color: color, fontSize: 15, marginTop: -10 }}>
@@ -55,6 +60,7 @@ export default function TabNavigation() {
           ),
         }}
       />
+      {/* <Tab.Screen name="Stack" component={StackNavigation} /> */}
     </Tab.Navigator>
   );
 }
