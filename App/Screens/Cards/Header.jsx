@@ -12,10 +12,10 @@ export default function Header() {
         onPress={() => navigation.goBack()}
       >
         <Ionicons name="chevron-back-outline" size={24} color="black" />
-        <Text>Cancel</Text>
+        <Text>Back</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.push('emptyCard')}>
-        <Text>Next</Text>
+      <TouchableOpacity style={styles.backContainer}>
+        <Ionicons name="ellipsis-vertical" size={24} color="black" />
       </TouchableOpacity>
     </View>
   );
