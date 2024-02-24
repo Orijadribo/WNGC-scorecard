@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import PlayerInput from "./PlayerInput";
 import ScoreCards from "./ScoreCards";
+import Competiton from "./Competiton";
 
 export default function CardSetUp() {
   return (
@@ -26,6 +27,12 @@ export default function CardSetUp() {
       <View style={styles.heading}>
         <Text style={{ fontSize: 24 }}>Select a ScoreCard</Text>
         <ScoreCards />
+      </View>
+
+      {/* Competition  */}
+      <View style={styles.heading}>
+        <Text style={{ fontSize: 24 }}>Competition</Text>
+        <Competiton/>
       </View>
     </View>
   );

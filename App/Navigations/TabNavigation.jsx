@@ -34,7 +34,7 @@ export default function TabNavigation() {
       />
       <Tab.Screen
         name="Home"
-        component={StackNavigation}
+        component={HomeScreen}
         options={{
           tabBarLabel: ({ color }) => (
             <Text style={{ color: color, fontSize: 15, marginTop: -10 }}>
