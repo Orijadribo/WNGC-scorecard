@@ -18,7 +18,6 @@ export default function Competiton() {
   return (
     <View style={styles.container}>
       <View style={styles.pickerContainer}>
-        {/* Supposed to be a drop-down */}
         <Picker
           selectedValue={selectedValue}
           onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}

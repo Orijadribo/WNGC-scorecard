@@ -14,7 +14,7 @@ export default function Header() {
         <Ionicons name="chevron-back-outline" size={24} color="black" />
         <Text>Back</Text>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.push('emptyCard')}>
         <Text>Next</Text>
       </TouchableOpacity>
     </View>

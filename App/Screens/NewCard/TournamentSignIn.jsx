@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function TournamentSignIn({hideModal}) {
+export default function TournamentSignIn({ hideModal }) {
   return (
     <View style={{ flex: 1, paddingHorizontal: 20 }}>
       <View style={styles.headerContainer}>
@@ -15,7 +15,13 @@ export default function TournamentSignIn({hideModal}) {
         </TouchableOpacity>
       </View>
       {/* Heading  */}
-      <Text style={{ fontSize: 24, marginTop:10 }}>Tournament SignIn</Text>
+      <Text style={{ fontSize: 24, marginTop: 10 }}>Tournament SignIn</Text>
+      {/* TOurnanment data  */}
+      <View style={styles.signInButton}>
+        <TouchableOpacity>
+          <Text style={{ fontSize: 20, color:'white' }}>SignIn</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -34,5 +40,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: 10,
     alignItems: "center",
+  },
+  signInButton: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding:15,
+    backgroundColor:'green',
+    borderRadius:15
   },
 });
