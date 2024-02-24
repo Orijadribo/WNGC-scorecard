@@ -1,18 +1,23 @@
-import { View, Text, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import { View, Text, StyleSheet, Modal } from "react-native";
+import React, { useState, useEffect } from "react";
 import { Picker } from "@react-native-picker/picker";
-
+import TournamentSignIn from "./TournamentSignIn";
 
 export default function Competiton() {
   const [selectedValue, setSelectedValue] = useState("option1");
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    if (selectedValue === "option2") {
+      setShowModal(true);
+    } else {
+      setShowModal(false);
+    }
+  }, [selectedValue]);
 
   return (
-    <View
-      style={styles.container}
-    >
-      <View
-        style={styles.pickerContainer}
-      >
+    <View style={styles.container}>
+      <View style={styles.pickerContainer}>
         {/* Supposed to be a drop-down */}
         <Picker
           selectedValue={selectedValue}
@@ -25,6 +30,13 @@ export default function Competiton() {
           <Picker.Item label="Casual Round" value="option1" />
           <Picker.Item label="Tournament" value="option2" />
         </Picker>
+        <Modal
+          visible={showModal}
+          animationType="slide"
+          onRequestClose={() => showModal(false)}
+        >
+          <TournamentSignIn hideModal={() => setShowModal(false)} />
+        </Modal>
       </View>
     </View>
   );

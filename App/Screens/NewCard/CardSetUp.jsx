@@ -9,10 +9,12 @@ import {
 import PlayerInput from "./PlayerInput";
 import ScoreCards from "./ScoreCards";
 import Competiton from "./Competiton";
+import Header from "./Header";
 
 export default function CardSetUp() {
   return (
     <View style={{ flex: 1, paddingHorizontal: 20 }}>
+      <Header/>
       {/* Add players  */}
       <View style={styles.heading}>
         {/* Each player field to have a leading icon */}
