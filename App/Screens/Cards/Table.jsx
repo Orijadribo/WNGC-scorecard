@@ -1,16 +1,9 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TextInput,
-  ScrollView,
-} from "react-native";
+import { View, Text, StyleSheet, FlatList, TextInput } from "react-native";
 import React from "react";
 
 export default function Table({ isFront }) {
-  const holesFront = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  const holesBack = [10, 11, 12, 13, 14, 15, 16, 17, 18];
+  const holesFront = Array.from({ length: 9 }).map((_, index) => index + 1);
+  const holesBack = Array.from({ length: 9 }).map((_, index) => index + 10);
 
   const parsFront = [5, 4, 3, 5, 4, 4, 3, 4, 4];
   const parsBack = [4, 4, 3, 5, 4, 4, 3, 4, 4];
@@ -18,7 +11,35 @@ export default function Table({ isFront }) {
   const yardsFront = [500, 400, 300, 500, 400, 400, 300, 400, 400];
   const yardsBack = [400, 400, 300, 500, 400, 400, 300, 400, 400];
 
-  const playerRows = Array.from({ length: 4 }).map((_, index) => index + 1);
+  const playerInput = Array.from({ length: 9 }).map((_, index) => index + 1);
+
+  const rowData = isFront
+    ? holesFront.map((hole, index) => ({
+        hole,
+        par: parsFront[index],
+        yards: yardsFront[index],
+        playerInput: playerInput[index],
+      }))
+    : holesBack.map((hole, index) => ({
+        hole,
+        par: parsBack[index],
+        yards: yardsBack[index],
+        playerInput: playerInput[index],
+      }));
+
+  const renderItem = ({ item }) => (
+    <View style={styles.row}>
+      <Text style={styles.holeParYards}>{item.hole}</Text>
+      <Text style={styles.holeParYards}>{item.par}</Text>
+      <Text style={styles.holeParYards}>{item.yards}</Text>
+      <View style={styles.playerInputContainer}>
+        <TextInput keyboardType="numeric" style={styles.playerInput} />
+        <TextInput keyboardType="numeric" style={styles.playerInput} />
+        <TextInput keyboardType="numeric" style={styles.playerInput} />
+        <TextInput keyboardType="numeric" style={styles.playerInput} />
+      </View>
+    </View>
+  );
 
   return (
     <View style={{ flex: 1 }}>
@@ -27,12 +48,18 @@ export default function Table({ isFront }) {
         <Text style={styles.holeParYardsHeader}>Hole</Text>
         <Text style={styles.holeParYardsHeader}>Par</Text>
         <Text style={styles.holeParYardsHeader}>Yards</Text>
-
         <Text style={styles.player}>Player 1</Text>
         <Text style={styles.player}>Player 2</Text>
         <Text style={styles.player}>Player 3</Text>
         <Text style={styles.player}>Player 4</Text>
       </View>
+
+      {/* Data Row  */}
+      <FlatList
+        data={rowData}
+        keyExtractor={(item) => item.hole.toString()}
+        renderItem={renderItem}
+      />
     </View>
   );
 }
@@ -61,34 +88,22 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     textAlign: "center",
   },
-  table: {
-    // padding: 10,
+  row: {
     display: "flex",
     flexDirection: "row",
-    // justifyContent:'space-between',
-    borderWidth: 1,
-  },
-  tableCell: {
-    borderWidth: 1,
-    display: "flex",
-    flexDirection: "row",
-    width: "100%",
+    paddingHorizontal: 10,
   },
   holeParYards: {
-    width: "100%",
-    // borderWidth: 1,
+    width: "12%",
+    borderWidth: 1,
+    textAlignVertical: "center",
     textAlign: "center",
   },
   playerInputContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    // marginTop: 10,
-  },
-  playerInputCell: {
-    width: "100%",
-    // borderWidth: 1,
-    // padding: 5,
     textAlign: "center",
+    width: "16%",
   },
   playerInput: {
     width: "100%",
