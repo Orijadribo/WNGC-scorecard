@@ -1,5 +1,5 @@
+import React, { useState } from "react";
 import { View, Text, StyleSheet, FlatList, TextInput } from "react-native";
-import React from "react";
 
 export default function Table({ isFront }) {
   const holesFront = Array.from({ length: 9 }).map((_, index) => index + 1);
@@ -27,16 +27,45 @@ export default function Table({ isFront }) {
         playerInput: playerInput[index],
       }));
 
-  const renderItem = ({ item }) => (
+  const [playerScores, setPlayerScores] = useState(
+    Array.from({ length: 4 }, () => Array(9).fill(0))
+  );
+
+  const handleScoreChange = (playerIndex, holeIndex, score) => {
+    const updatedScores = [...playerScores];
+    updatedScores[playerIndex][holeIndex] = score;
+    setPlayerScores(updatedScores);
+  };
+
+  const calculateTotal = (playerIndex) => {
+    return playerScores[playerIndex].reduce(
+      (acc, score) => acc + parseInt(score),
+      0
+    );
+  };
+
+  const renderPlayerScores = () => {
+    return Array.from({ length: 4 }).map((_, playerIndex) => (
+      <Text key={playerIndex} style={styles.player}>
+        {calculateTotal(playerIndex)}
+      </Text>
+    ));
+  };
+
+  const renderItem = ({ item, index }) => (
     <View style={styles.row}>
       <Text style={styles.holeParYards}>{item.hole}</Text>
       <Text style={styles.holeParYards}>{item.par}</Text>
       <Text style={styles.holeParYards}>{item.yards}</Text>
       <View style={styles.playerInputContainer}>
-        <TextInput keyboardType="numeric" style={styles.playerInput} />
-        <TextInput keyboardType="numeric" style={styles.playerInput} />
-        <TextInput keyboardType="numeric" style={styles.playerInput} />
-        <TextInput keyboardType="numeric" style={styles.playerInput} />
+        {Array.from({ length: 4 }).map((_, playerIndex) => (
+          <TextInput
+            key={playerIndex}
+            keyboardType="numeric"
+            style={styles.playerInput}
+            onChangeText={(text) => handleScoreChange(playerIndex, index, text)}
+          />
+        ))}
       </View>
     </View>
   );
@@ -48,10 +77,11 @@ export default function Table({ isFront }) {
         <Text style={styles.holeParYardsHeader}>Hole</Text>
         <Text style={styles.holeParYardsHeader}>Par</Text>
         <Text style={styles.holeParYardsHeader}>Yards</Text>
-        <Text style={styles.player}>Player 1</Text>
-        <Text style={styles.player}>Player 2</Text>
-        <Text style={styles.player}>Player 3</Text>
-        <Text style={styles.player}>Player 4</Text>
+        {Array.from({ length: 4 }).map((_, playerIndex) => (
+          <Text key={playerIndex} style={styles.player}>
+            Player {playerIndex + 1}
+          </Text>
+        ))}
       </View>
 
       {/* Data Row  */}
@@ -60,6 +90,14 @@ export default function Table({ isFront }) {
         keyExtractor={(item) => item.hole.toString()}
         renderItem={renderItem}
       />
+
+      {/* Totals  */}
+      <View style={styles.tableHeader}>
+        <Text style={styles.holeParYardsHeader}>Totals</Text>
+        <Text style={styles.holeParYardsHeader}>{isFront ? 36 : 35}</Text>
+        <Text style={styles.holeParYardsHeader}>{isFront ? 3600 : 3500}</Text>
+        {renderPlayerScores()}
+      </View>
     </View>
   );
 }
