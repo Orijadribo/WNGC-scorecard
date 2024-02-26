@@ -7,7 +7,7 @@ export default function HomeScreen({ navigation }) {
   return (
     <View style={{ marginTop: 20, paddingHorizontal: 20 }}>
       <Header navigation={navigation} />
-        <History />
+      <History />
     </View>
   );
 }
