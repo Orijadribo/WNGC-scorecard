@@ -1,4 +1,10 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import React, { useState } from 'react';
 import Scores from './Scores';
 
@@ -20,7 +26,7 @@ export default function History() {
           <Text style={styles.text}>Tournaments</Text>
         </TouchableOpacity>
       </View>
-      <Scores isCasual={isCasual} />
+        <Scores isCasual={isCasual} />
     </View>
   );
 }
