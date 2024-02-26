@@ -5,6 +5,7 @@ import { Text, View } from "react-native";
 import React from 'react'
 import TabNavigation from "./TabNavigation";
 import EmptyCard from "../Screens/Cards/EmptyCard";
+import ViewCard from "../Screens/HomeScreen/ViewCard";
 
 const Stack = createStackNavigator();
 
@@ -14,6 +15,7 @@ export default function StackNavigation() {
       <Stack.Screen name="home" component={TabNavigation} />
       <Stack.Screen name="addCard" component={CardSetUp} />
       <Stack.Screen name="emptyCard" component={EmptyCard} />
+      <Stack.Screen name="viewCard" component={ViewCard} />
     </Stack.Navigator>
   );
 }
