@@ -1,17 +1,25 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native';
+import React, { useState, useEffect } from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import AddPlayer from './AddPlayer';
 
 export default function Header() {
   const navigation = useNavigation();
   const [isOpen, setIsOpen] = useState(false);
+  const [addPlayer, setAddPlayer] = useState(false);
+
+
+   useEffect(() => {
+     
+   }, [addPlayer]);
+
   return (
     <View style={styles.container}>
       <Text>Players</Text>
       <View style={styles.navBarIcons}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => setAddPlayer(!addPlayer)}>
           <FontAwesome6 name='plus' size={24} color='black' />
         </TouchableOpacity>
         <View style={styles.optionsContainer}>
@@ -34,6 +42,13 @@ export default function Header() {
           </View>
         </View>
       </View>
+      <Modal
+        visible={addPlayer}
+        animationType='slide'
+        onRequestClose={() => setAddPlayer(false)}
+      >
+        <AddPlayer hideModal={() => setAddPlayer(false)} />
+      </Modal>
     </View>
   );
 }

@@ -29,6 +29,7 @@ export default function Players() {
                   <Text>{player.lastName}</Text>
                 </View>
                 <Text>Handicap Index {player.handicapIndex}</Text>
+                <Text>Playing Handicap {player.handicapIndex}</Text>
               </View>
               <View style={styles.horizontalLine}></View>
             </TouchableOpacity>
@@ -48,6 +49,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 5,
     marginTop: 5,
+    paddingBottom:10
   },
   horizontalLine: {
     borderBottomColor: 'black',

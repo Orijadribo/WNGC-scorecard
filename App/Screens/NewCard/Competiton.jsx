@@ -4,7 +4,7 @@ import { Picker } from "@react-native-picker/picker";
 import TournamentSignIn from "./TournamentSignIn";
 
 export default function Competiton() {
-  const [selectedValue, setSelectedValue] = useState("option1");
+  const [selectedValue, setSelectedValue] = useState("");
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function Competiton() {
         <Modal
           visible={showModal}
           animationType="slide"
-          onRequestClose={() => showModal(false)}
+          onRequestClose={() => setShowModal(false)}
         >
           <TournamentSignIn hideModal={() => setShowModal(false)} />
         </Modal>
