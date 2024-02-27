@@ -18,7 +18,7 @@ export default function Header() {
           <TouchableOpacity onPress={() => setIsOpen(!isOpen)}>
             <Entypo name='dots-three-vertical' size={24} color='black' />
           </TouchableOpacity>
-          <View style={[styles.options, isOpen && styles.open]}>
+          <View style={[styles.options, !isOpen && styles.open]}>
             <TouchableOpacity>
               <Text style={styles.optionsText}>Edit Player</Text>
             </TouchableOpacity>
@@ -55,9 +55,12 @@ const styles = StyleSheet.create({
     // marginTop: 10,
     // borderWidth: 1,
   },
-  optionsContainer: { position: 'relative' },
+  optionsContainer: {
+    position: 'relative',
+  },
   options: {
-    borderWidth: 1,
+    backgroundColor: 'white',
+    borderWidth: 0.5,
     borderRadius: 10,
     padding: 10,
     position: 'absolute',
@@ -66,7 +69,7 @@ const styles = StyleSheet.create({
     top: 40,
   },
   optionsText: {
-    paddingTop: 10,
+    paddingVertical: 5,
   },
   open: {
     display: 'none',
