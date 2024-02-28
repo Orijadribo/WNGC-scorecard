@@ -26,7 +26,7 @@ export default function History() {
           <Text style={styles.text}>Tournaments</Text>
         </TouchableOpacity>
       </View>
-        <Scores isCasual={isCasual} />
+      <Scores isCasual={isCasual} />
     </View>
   );
 }
@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     // borderWidth: 2,
     borderRadius: 7,
     padding: 10,
+    paddingHorizontal: 40,
   },
   selectedText: {
     borderRadius: 7,

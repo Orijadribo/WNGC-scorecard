@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
   },
   optionsContainer: {
     position: 'relative',
+    zIndex: 10,
   },
   options: {
     backgroundColor: 'white',

@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 export default function Scores({ isCasual }) {
   const navigation = useNavigation();
   return (
-    <View>
+    <View >
       <FlatList
         data={isCasual ? casualRounds : []}
         keyExtractor={(item) => item.id.toString()}
