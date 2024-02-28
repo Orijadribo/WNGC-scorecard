@@ -79,7 +79,7 @@ export default function Table({ isFront, scores }) {
   );
 
   return (
-    <View style={{ flex: 1 }}>
+    <View >
       {/* Table Header  */}
       <View style={styles.tableHeader}>
         <Text style={styles.holeParYardsHeader}>Hole</Text>
@@ -147,11 +147,12 @@ const styles = StyleSheet.create({
   row: {
     display: 'flex',
     flexDirection: 'row',
-    paddingHorizontal: 10,
+    paddingLeft: 10,
+    borderWidth: 1,
   },
   holeParYards: {
     width: '12%',
-    borderWidth: 1,
+    // borderWidth: 1,
     textAlignVertical: 'center',
     textAlign: 'center',
   },
