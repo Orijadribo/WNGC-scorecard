@@ -20,7 +20,7 @@ export default function Players() {
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item: player }) => (
             <TouchableOpacity
-              onPress={() => navigation.push('viewCard')}
+              // onPress={() => navigation.push('viewCard')}
               style={styles.nameContainer}
             >
               <View style={{ paddingHorizontal: 10 }}>

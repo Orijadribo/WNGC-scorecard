@@ -14,15 +14,12 @@ import Header from "./Header";
 export default function CardSetUp() {
   return (
     <View style={{ flex: 1, paddingHorizontal: 20 }}>
-      <Header/>
-      {/* Add players  */}
+      <Header />
+
+      {/* Competition  */}
       <View style={styles.heading}>
-        {/* Each player field to have a leading icon */}
-        <Text style={{ fontSize: 24 }}>Add Players</Text>
-        <PlayerInput player={"Player 1"} optional={""} />
-        <PlayerInput player={"Player 2"} optional={""} />
-        <PlayerInput player={"Player 3"} optional={" (Optional)"} />
-        <PlayerInput player={"Player 4"} optional={" (Optional)"} />
+        <Text style={{ fontSize: 24 }}>Competition</Text>
+        <Competiton />
       </View>
 
       {/* Add scorecard  */}
@@ -31,10 +28,14 @@ export default function CardSetUp() {
         <ScoreCards />
       </View>
 
-      {/* Competition  */}
+      {/* Add players  */}
       <View style={styles.heading}>
-        <Text style={{ fontSize: 24 }}>Competition</Text>
-        <Competiton/>
+        {/* Each player field to have a leading icon */}
+        <Text style={{ fontSize: 24 }}>Add Players</Text>
+        <PlayerInput player={'Player 1'} optional={''} />
+        <PlayerInput player={'Player 2'} optional={''} />
+        <PlayerInput player={'Player 3'} optional={' (Optional)'} />
+        <PlayerInput player={'Player 4'} optional={' (Optional)'} />
       </View>
     </View>
   );
