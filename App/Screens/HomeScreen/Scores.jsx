@@ -24,10 +24,8 @@ export default function Scores({ isCasual }) {
           >
             <Text>Casual Round</Text>
             <Text>Date: {scoreCard.date}</Text>
-            <Text>{scoreCard.scores.daniel.hole1}</Text>
-            <Text>{scoreCard.scores.daniel.hole2}</Text>
-            <Text>{scoreCard.scores.daniel.hole3}</Text>
-            <Text>{scoreCard.scores.daniel.hole4}</Text>
+            <Text>Gross {scoreCard.scores.daniel.hole1}</Text>
+            <Text>Net {scoreCard.scores.daniel.hole2}</Text>
           </TouchableOpacity>
         )}
       />
@@ -39,7 +37,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     padding: 10,
     borderWidth: 1,
-    marginTop: 10,
+    marginBottom: 10,
     borderRadius: 10,
   },
 });
