@@ -16,6 +16,7 @@ export default function Scores({ isCasual }) {
       <FlatList
         data={isCasual ? casualRounds : []}
         keyExtractor={(item) => item.id.toString()}
+        showsVerticalScrollIndicator={false}
         renderItem={({ item: scoreCard }) => (
           <TouchableOpacity
             onPress={() => navigation.push('viewCard')}

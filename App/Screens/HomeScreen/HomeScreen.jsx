@@ -5,7 +5,7 @@ import History from './History';
 
 export default function HomeScreen({ navigation }) {
   return (
-    <View style={{ marginTop: 20, paddingHorizontal: 20 }}>
+    <View style={{ marginTop: 20, paddingHorizontal: 20 ,marginBottom: 760 }}>
       <Header navigation={navigation} />
       <History />
     </View>

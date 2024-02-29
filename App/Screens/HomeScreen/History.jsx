@@ -11,7 +11,7 @@ import Scores from './Scores';
 export default function History() {
   const [isCasual, setIsCasual] = useState(true);
   return (
-    <View>
+    <View >
       <View style={styles.heading}>
         <TouchableOpacity
           style={isCasual && styles.selectedText}
