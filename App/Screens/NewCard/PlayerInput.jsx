@@ -9,13 +9,20 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
-const PlayerInput = ({ player, optional, playersAvailable }) => {
+const PlayerInput = ({
+  player,
+  optional,
+  playersAvailable,
+  onInputChange,
+  onPlayerSelect,
+}) => {
   const [inputValue, setInputValue] = useState('');
   const [showPlayerOptions, setShowPlayerOptions] = useState(false);
 
   const handleInputChange = (text) => {
     setInputValue(text);
     setShowPlayerOptions(true); // Show options when typing
+    onInputChange(player, text);
   };
 
   const handlePlayerSelect = (selectedPlayer) => {
@@ -23,6 +30,10 @@ const PlayerInput = ({ player, optional, playersAvailable }) => {
       `${selectedPlayer.firstName} ${selectedPlayer.lastName} (${selectedPlayer.handicapIndex})`
     );
     setShowPlayerOptions(false); // Hide options after selecting
+    onPlayerSelect(
+      player,
+      `${selectedPlayer.firstName}`
+    );
   };
 
   const renderPlayerOptions = () => {
@@ -42,8 +53,6 @@ const PlayerInput = ({ player, optional, playersAvailable }) => {
       </TouchableOpacity>
     ));
   };
-
-  console.log(inputValue);
 
   return (
     <View style={styles.container}>

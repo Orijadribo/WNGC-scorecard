@@ -44,7 +44,7 @@ export default function CardSetUp() {
     }
   }, [competitonSelected]);
 
-  console.log(playerOne);
+  console.log(playerOne, playerTwo, playerThree, playerFour);
 
   return (
     <View style={{ flex: 1, paddingHorizontal: 20 }}>
@@ -71,23 +71,29 @@ export default function CardSetUp() {
           player={'Player 1'}
           optional={''}
           playersAvailable={playersAvailable}
-          setPlayerOne={setPlayerOne}
+          onInputChange={(player, inputValue) => setPlayerOne(inputValue)}
+          onPlayerSelect={(player, playerName) => setPlayerOne(playerName)}
         />
         <PlayerInput
           player={'Player 2'}
           optional={''}
           playersAvailable={playersAvailable}
-          setPlayerTwo={setPlayerTwo}
+          onInputChange={(player, inputValue) => setPlayerTwo(inputValue)}
+          onPlayerSelect={(player, playerName) => setPlayerTwo(playerName)}
         />
         <PlayerInput
           player={'Player 3'}
           optional={' (Optional)'}
           playersAvailable={playersAvailable}
+          onInputChange={(player, inputValue) => setPlayerThree(inputValue)}
+          onPlayerSelect={(player, playerName) => setPlayerThree(playerName)}
         />
         <PlayerInput
           player={'Player 4'}
           optional={' (Optional)'}
           playersAvailable={playersAvailable}
+          onInputChange={(player, inputValue) => setPlayerFour(inputValue)}
+          onPlayerSelect={(player, playerName) => setPlayerFour(playerName)}
         />
       </View>
     </View>
