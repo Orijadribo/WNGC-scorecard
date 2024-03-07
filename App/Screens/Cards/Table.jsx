@@ -8,8 +8,8 @@ export default function Table({ isFront, scores, selectedPlayers }) {
   const parsFront = [5, 4, 3, 5, 4, 4, 3, 4, 4];
   const parsBack = [4, 4, 3, 5, 4, 4, 3, 4, 4];
 
-  const yardsFront = [500, 400, 300, 500, 400, 400, 300, 400, 400];
-  const yardsBack = [400, 400, 300, 500, 400, 400, 300, 400, 400];
+  const yardsFront = [460, 355, 177, 471, 371, 379, 177, 292, 362];
+  const yardsBack = [395, 374, 188, 487, 397, 387, 203, 282, 384];
 
   const playerInput = Array.from({ length: 9 }).map((_, index) => index + 1);
 
