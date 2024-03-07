@@ -1,26 +1,21 @@
 import React, { useState } from 'react';
+import { Platform } from 'react-native';
 import {
-  View,
+  Text,
   TextInput,
   TouchableOpacity,
-  Text,
+  View,
   StyleSheet,
+  KeyboardAvoidingView,
 } from 'react-native';
 
-const PlayerInput = ({
-  player,
-  optional,
-  playersAvailable,
-  onInputChange,
-  onPlayerSelect,
-}) => {
+const PlayerInput = ({ player, optional, playersAvailable }) => {
   const [inputValue, setInputValue] = useState('');
   const [showPlayerOptions, setShowPlayerOptions] = useState(false);
 
   const handleInputChange = (text) => {
     setInputValue(text);
     setShowPlayerOptions(true); // Show options when typing
-    onInputChange(player, text);
   };
 
   const handlePlayerSelect = (selectedPlayer) => {
@@ -28,10 +23,6 @@ const PlayerInput = ({
       `${selectedPlayer.firstName} ${selectedPlayer.lastName} (${selectedPlayer.handicapIndex})`
     );
     setShowPlayerOptions(false); // Hide options after selecting
-    onPlayerSelect(
-      player,
-      `${selectedPlayer.firstName} ${selectedPlayer.lastName}`
-    );
   };
 
   const renderPlayerOptions = () => {
@@ -51,6 +42,8 @@ const PlayerInput = ({
       </TouchableOpacity>
     ));
   };
+
+  console.log(inputValue);
 
   return (
     <View style={styles.container}>
@@ -84,6 +77,7 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   textInput: {
+    // fontFamily: FONT.regular,
     width: '100%',
     height: '100%',
     paddingHorizontal: 16,

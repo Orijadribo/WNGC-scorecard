@@ -47,52 +47,50 @@ export default function CardSetUp() {
   console.log(playerOne);
 
   return (
-    
-        <View style={{ flex: 1, paddingHorizontal: 20 }}>
-          <Header />
+    <View style={{ flex: 1, paddingHorizontal: 20 }}>
+      <Header />
 
-          {/* Competition  */}
-          <View style={styles.heading}>
-            <Text style={{ fontSize: 24 }}>Competition</Text>
-            <Competiton setCompetitonSelected={setCompetitonSelected} />
-          </View>
+      {/* Competition  */}
+      <View style={styles.heading}>
+        <Text style={{ fontSize: 24 }}>Competition</Text>
+        <Competiton setCompetitonSelected={setCompetitonSelected} />
+      </View>
 
-          {/* Add scorecard  */}
-          <View style={styles.heading}>
-            <Text style={{ fontSize: 24 }}>Select a ScoreCard</Text>
-            <ScoreCards />
-          </View>
+      {/* Add scorecard  */}
+      <View style={styles.heading}>
+        <Text style={{ fontSize: 24 }}>Select a ScoreCard</Text>
+        <ScoreCards />
+      </View>
 
-          {/* Add players  */}
-          <View style={styles.heading}>
-            {/* Each player field to have a leading icon */}
-            <Text style={{ fontSize: 24 }}>Add Players</Text>
+      {/* Add players  */}
+      <View style={styles.heading}>
+        {/* Each player field to have a leading icon */}
+        <Text style={{ fontSize: 24 }}>Add Players</Text>
 
-            <PlayerInput
-              player={'Player 1'}
-              optional={''}
-              playersAvailable={playersAvailable}
-              setPlayerOne={setPlayerOne}
-            />
-            <PlayerInput
-              player={'Player 2'}
-              optional={''}
-              playersAvailable={playersAvailable}
-              setPlayerTwo={setPlayerTwo}
-            />
-            <PlayerInput
-              player={'Player 3'}
-              optional={' (Optional)'}
-              playersAvailable={playersAvailable}
-            />
-            <PlayerInput
-              player={'Player 4'}
-              optional={' (Optional)'}
-              playersAvailable={playersAvailable}
-            />
-          </View>
-        </View>
-      
+        <PlayerInput
+          player={'Player 1'}
+          optional={''}
+          playersAvailable={playersAvailable}
+          setPlayerOne={setPlayerOne}
+        />
+        <PlayerInput
+          player={'Player 2'}
+          optional={''}
+          playersAvailable={playersAvailable}
+          setPlayerTwo={setPlayerTwo}
+        />
+        <PlayerInput
+          player={'Player 3'}
+          optional={' (Optional)'}
+          playersAvailable={playersAvailable}
+        />
+        <PlayerInput
+          player={'Player 4'}
+          optional={' (Optional)'}
+          playersAvailable={playersAvailable}
+        />
+      </View>
+    </View>
   );
 }
 
