@@ -1,9 +1,9 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Header from './Header';
 import Table from './Table';
 
-export default function EmptyCard({ scores }) {
+export default function EmptyCard({ route }) {
   const [isFront, setIsFront] = useState(true);
 
   const months = [
@@ -27,6 +27,9 @@ export default function EmptyCard({ scores }) {
   const year = today.getFullYear();
 
   const formattedDate = `${day} ${month} ${year}`;
+
+  const { selectedPlayers } = route.params;
+
   return (
     <View style={{ flex: 1, paddingHorizontal: 20 }}>
       <Header />
@@ -34,7 +37,7 @@ export default function EmptyCard({ scores }) {
         <View>
           <View>
             <Text>Casual Round</Text>
-            <Text>{scores ? scores[0]?.date : formattedDate}</Text>
+            <Text>{formattedDate}</Text>
           </View>
         </View>
         <View style={styles.frontBackContainer}>
@@ -50,7 +53,7 @@ export default function EmptyCard({ scores }) {
           </TouchableOpacity>
         </View>
       </View>
-      <Table isFront={isFront} scores={scores} />
+      <Table isFront={isFront} selectedPlayers={selectedPlayers} />
     </View>
   );
 }

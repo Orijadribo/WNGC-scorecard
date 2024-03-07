@@ -19,7 +19,7 @@ export default function Scores({ isCasual }) {
         showsVerticalScrollIndicator={false}
         renderItem={({ item: scoreCard }) => (
           <TouchableOpacity
-            onPress={() => navigation.push('viewCard')}
+            // onPress={() => navigation.push('viewCard')}
             style={styles.cardContainer}
           >
             <Text>Casual Round</Text>

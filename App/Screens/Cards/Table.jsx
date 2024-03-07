@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TextInput } from 'react-native';
 
-export default function Table({ isFront, scores }) {
+export default function Table({ isFront, scores, selectedPlayers }) {
   const holesFront = Array.from({ length: 9 }).map((_, index) => index + 1);
   const holesBack = Array.from({ length: 9 }).map((_, index) => index + 10);
 
@@ -58,7 +58,16 @@ export default function Table({ isFront, scores }) {
       <Text style={styles.holeParYards}>{item.par}</Text>
       <Text style={styles.holeParYards}>{item.yards}</Text>
       <View style={styles.playerInputContainer}>
-        {Array.from({ length: 4 }).map((_, playerIndex) =>
+        {selectedPlayers.map((player, playerIndex) => (
+          <TextInput
+            key={playerIndex}
+            keyboardType='numeric'
+            style={styles.playerInput}
+            onChangeText={(text) => handleScoreChange(playerIndex, index, text)}
+          />
+        ))}
+
+        {/* {Array.from({ length: 4 }).map((_, playerIndex) =>
           !scores ? (
             <TextInput
               key={playerIndex}
@@ -73,19 +82,28 @@ export default function Table({ isFront, scores }) {
               {scores[playerIndex]?.scores?.joseph?.[`hole${item.hole}`]}
             </Text>
           )
-        )}
+        )} */}
       </View>
     </View>
   );
 
+  console.log('Selected Players:', selectedPlayers);
+
   return (
-    <View >
+    <View>
       {/* Table Header  */}
       <View style={styles.tableHeader}>
         <Text style={styles.holeParYardsHeader}>Hole</Text>
         <Text style={styles.holeParYardsHeader}>Par</Text>
         <Text style={styles.holeParYardsHeader}>Yards</Text>
-        {Array.from({ length: 4 }).map((_, playerIndex) =>
+
+        {selectedPlayers.map((player, playerIndex) => (
+          <Text key={playerIndex} style={styles.player}>
+            {player}
+          </Text>
+        ))}
+
+        {/* {Array.from({ length: 4 }).map((_, playerIndex) =>
           scores ? (
             <Text key={playerIndex} style={styles.player}>
               {Object.keys(scores[playerIndex]?.scores || {}).map(
@@ -96,10 +114,14 @@ export default function Table({ isFront, scores }) {
             </Text>
           ) : (
             <Text key={playerIndex} style={styles.player}>
-              Player
+              {selectedPlayers.map((player, playerIndex) => (
+                <Text key={playerIndex} style={styles.player}>
+                  {player}
+                </Text>
+              ))}
             </Text>
           )
-        )}
+        )} */}
       </View>
 
       {/* Data Row  */}
@@ -109,6 +131,13 @@ export default function Table({ isFront, scores }) {
         renderItem={renderItem}
       />
 
+      {/* To par */}
+      <View style={[styles.tableHeader, (style = { marginBottom: -10 })]}>
+        <Text style={styles.holeParYardsHeader}>To Par</Text>
+        <Text style={styles.holeParYardsHeader}></Text>
+        <Text style={styles.holeParYardsHeader}></Text>
+        {renderPlayerScores()}
+      </View>
       {/* Totals  */}
       <View style={styles.tableHeader}>
         <Text style={styles.holeParYardsHeader}>Totals</Text>
@@ -127,6 +156,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     marginTop: 20,
+    marginBottom: 7,
+    borderRadius: 7,
   },
   holeParYardsHeader: {
     width: '12%',
@@ -137,7 +168,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   player: {
-    width: '16%',
+    width: '17%',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -148,7 +179,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     paddingLeft: 10,
-    borderWidth: 1,
+    marginVertical: 3,
   },
   holeParYards: {
     width: '12%',
@@ -160,13 +191,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     textAlign: 'center',
-    width: '16%',
+    width: '15%',
   },
   playerInput: {
     width: '100%',
     borderWidth: 1,
+    borderRadius: 7,
     padding: 5,
     textAlign: 'center',
+    marginHorizontal: 2,
   },
   score: {
     width: '100%',

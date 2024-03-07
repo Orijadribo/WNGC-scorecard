@@ -3,7 +3,7 @@ import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
-export default function Header() {
+export default function Header({ selectedPlayers }) {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -11,10 +11,12 @@ export default function Header() {
         style={styles.backContainer}
         onPress={() => navigation.goBack()}
       >
-        <Ionicons name="chevron-back-outline" size={24} color="black" />
+        <Ionicons name='chevron-back-outline' size={24} color='black' />
         <Text>Cancel</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.push('emptyCard')}>
+      <TouchableOpacity
+        onPress={() => navigation.push('emptyCard', { selectedPlayers })}
+      >
         <Text>Next</Text>
       </TouchableOpacity>
     </View>

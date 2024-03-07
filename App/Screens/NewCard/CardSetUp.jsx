@@ -22,6 +22,7 @@ export default function CardSetUp() {
   const [playerTwo, setPlayerTwo] = useState('');
   const [playerThree, setPlayerThree] = useState('');
   const [playerFour, setPlayerFour] = useState('');
+  const [selectedPlayers, setSelectedPlayers] = useState([]);
 
   const playersCollectionRef = collection(firebase.firestore(), 'players');
 
@@ -44,11 +45,9 @@ export default function CardSetUp() {
     }
   }, [competitonSelected]);
 
-  console.log(playerOne, playerTwo, playerThree, playerFour);
-
   return (
     <View style={{ flex: 1, paddingHorizontal: 20 }}>
-      <Header />
+      <Header selectedPlayers={selectedPlayers} />
 
       {/* Competition  */}
       <View style={styles.heading}>
@@ -72,28 +71,36 @@ export default function CardSetUp() {
           optional={''}
           playersAvailable={playersAvailable}
           onInputChange={(player, inputValue) => setPlayerOne(inputValue)}
-          onPlayerSelect={(player, playerName) => setPlayerOne(playerName)}
+          onPlayerSelect={(player, playerName) =>
+            setSelectedPlayers([...selectedPlayers, playerName])
+          }
         />
         <PlayerInput
           player={'Player 2'}
           optional={''}
           playersAvailable={playersAvailable}
           onInputChange={(player, inputValue) => setPlayerTwo(inputValue)}
-          onPlayerSelect={(player, playerName) => setPlayerTwo(playerName)}
+          onPlayerSelect={(player, playerName) =>
+            setSelectedPlayers([...selectedPlayers, playerName])
+          }
         />
         <PlayerInput
           player={'Player 3'}
           optional={' (Optional)'}
           playersAvailable={playersAvailable}
           onInputChange={(player, inputValue) => setPlayerThree(inputValue)}
-          onPlayerSelect={(player, playerName) => setPlayerThree(playerName)}
+          onPlayerSelect={(player, playerName) =>
+            setSelectedPlayers([...selectedPlayers, playerName])
+          }
         />
         <PlayerInput
           player={'Player 4'}
           optional={' (Optional)'}
           playersAvailable={playersAvailable}
           onInputChange={(player, inputValue) => setPlayerFour(inputValue)}
-          onPlayerSelect={(player, playerName) => setPlayerFour(playerName)}
+          onPlayerSelect={(player, playerName) =>
+            setSelectedPlayers([...selectedPlayers, playerName])
+          }
         />
       </View>
     </View>
