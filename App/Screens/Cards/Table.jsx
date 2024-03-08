@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TextInput } from 'react-native';
+import { addDoc, collection, doc, setDoc, updateDoc } from 'firebase/firestore';
+import { firebase } from '../../api/firebaseConfig';
 
 export default function Table({ isFront, scores, selectedPlayers }) {
   const holesFront = Array.from({ length: 9 }).map((_, index) => index + 1);
@@ -12,6 +14,11 @@ export default function Table({ isFront, scores, selectedPlayers }) {
   const yardsBack = [395, 374, 188, 487, 397, 387, 203, 282, 384];
 
   const playerInput = Array.from({ length: 9 }).map((_, index) => index + 1);
+
+    const tournamentsCollectionRef = collection(
+      firebase.firestore(),
+      'tournaments'
+    );
 
   const rowData = isFront
     ? holesFront.map((hole, index) => ({
@@ -28,28 +35,34 @@ export default function Table({ isFront, scores, selectedPlayers }) {
       }));
 
   const [playerScores, setPlayerScores] = useState(
-    Array.from({ length: 4 }, () => Array(9).fill(0))
+    Array.from({ length: selectedPlayers.length }, () => Array(9).fill(''))
   );
 
   const handleScoreChange = (playerIndex, holeIndex, score) => {
     const updatedScores = [...playerScores];
-    updatedScores[playerIndex][holeIndex] = score;
+    updatedScores[playerIndex][holeIndex] =
+      score !== '' ? parseInt(score) : null;
     setPlayerScores(updatedScores);
+
+
+
+
+
   };
 
   const calculateTotal = (playerIndex) => {
-    return playerScores[playerIndex].reduce(
-      (acc, score) => acc + parseInt(score),
-      0
-    );
+    const scores = playerScores[playerIndex] || [];
+    return scores.reduce((acc, score) => acc + (score || 0), 0);
   };
 
   const renderPlayerScores = () => {
-    return Array.from({ length: 4 }).map((_, playerIndex) => (
-      <Text key={playerIndex} style={styles.player}>
-        {calculateTotal(playerIndex)}
-      </Text>
-    ));
+    return Array.from({ length: selectedPlayers.length }).map(
+      (_, playerIndex) => (
+        <Text key={playerIndex} style={styles.player}>
+          {calculateTotal(playerIndex)}
+        </Text>
+      )
+    );
   };
 
   const renderItem = ({ item, index }) => (
@@ -58,14 +71,23 @@ export default function Table({ isFront, scores, selectedPlayers }) {
       <Text style={styles.holeParYards}>{item.par}</Text>
       <Text style={styles.holeParYards}>{item.yards}</Text>
       <View style={styles.playerInputContainer}>
-        {selectedPlayers.map((player, playerIndex) => (
-          <TextInput
-            key={playerIndex}
-            keyboardType='numeric'
-            style={styles.playerInput}
-            onChangeText={(text) => handleScoreChange(playerIndex, index, text)}
-          />
-        ))}
+        {selectedPlayers.map((player, playerIndex) => {
+          const playerScore = playerScores[playerIndex][index];
+          console.log(
+            `Player ${player}: Hole ${item.hole} - Score: ${playerScore}`
+          );
+
+          return (
+            <TextInput
+              key={playerIndex}
+              keyboardType='numeric'
+              style={styles.playerInput}
+              onChangeText={(text) =>
+                handleScoreChange(playerIndex, index, text)
+              }
+            />
+          );
+        })}
 
         {/* {Array.from({ length: 4 }).map((_, playerIndex) =>
           !scores ? (

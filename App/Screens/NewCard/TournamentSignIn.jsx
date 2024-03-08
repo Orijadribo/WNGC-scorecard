@@ -2,7 +2,14 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
-import { getDocs, collection } from 'firebase/firestore';
+import {
+  getDocs,
+  addDoc,
+  collection,
+  doc,
+  setDoc,
+  updateDoc,
+} from 'firebase/firestore';
 import { firebase } from '../../api/firebaseConfig';
 
 export default function TournamentSignIn({ hideModal }) {
@@ -32,20 +39,19 @@ export default function TournamentSignIn({ hideModal }) {
     getTournaments();
   }, [tournamentsCollectionRef]);
 
-const tournament = ()=>{
-  // Find the selected tournament details when the selectedValue changes
-  const selectedTournamentDetails = tournamentSignIn.find(
-    (tournament) => tournament.id === selectedValue
-  );
-  setSelectedTournament(selectedTournamentDetails);
-
-}
+  const tournament = () => {
+    // Find the selected tournament details when the selectedValue changes
+    const selectedTournamentDetails = tournamentSignIn.find(
+      (tournament) => tournament.id === selectedValue
+    );
+    setSelectedTournament(selectedTournamentDetails);
+  };
 
   useEffect(() => {
-    tournament()
+    tournament();
   }, [selectedValue]);
 
-  const signIn=()=>{}
+  const signIn = () => {};
 
   return (
     <View style={{ flex: 1, paddingHorizontal: 20 }}>
@@ -88,7 +94,7 @@ const tournament = ()=>{
       {/* Display selected tournament details */}
       {selectedTournament && (
         <View style={styles.tournamentDetails}>
-          <Text style={{marginVertical:10}}>Tournament Selected</Text>
+          <Text style={{ marginVertical: 10 }}>Tournament Selected</Text>
           <Text>{selectedTournament.id}</Text>
           <Text>Date: {selectedTournament.date}</Text>
           <Text>Details: {selectedTournament.details}</Text>
@@ -131,7 +137,7 @@ const styles = StyleSheet.create({
   picker: {
     marginTop: 10,
   },
-  tournamentDetails:{
-    marginVertical:20
-  }
+  tournamentDetails: {
+    marginVertical: 20,
+  },
 });
