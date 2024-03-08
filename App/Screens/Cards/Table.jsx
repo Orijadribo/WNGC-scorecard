@@ -49,7 +49,9 @@ export default function Table({ isFront, scores, selectedPlayers }) {
 
     try {
       const playerId = selectedPlayers[playerIndex].toLowerCase();
-      const scoreKey = `hole${holeIndex + 1}`;
+      const scoreKey = `hole${
+        isFront ? holesFront[holeIndex] : holesBack[holeIndex]
+      }`;
       const scoreValue = score !== '' ? parseInt(score) : null;
 
       const womenDocRef = doc(tournamentsCollectionRef, "Women's");
