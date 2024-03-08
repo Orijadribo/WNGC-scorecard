@@ -15,10 +15,10 @@ export default function Table({ isFront, scores, selectedPlayers }) {
 
   const playerInput = Array.from({ length: 9 }).map((_, index) => index + 1);
 
-    const tournamentsCollectionRef = collection(
-      firebase.firestore(),
-      'tournaments'
-    );
+  const tournamentsCollectionRef = collection(
+    firebase.firestore(),
+    'tournaments'
+  );
 
   const rowData = isFront
     ? holesFront.map((hole, index) => ({
@@ -38,16 +38,33 @@ export default function Table({ isFront, scores, selectedPlayers }) {
     Array.from({ length: selectedPlayers.length }, () => Array(9).fill(''))
   );
 
-  const handleScoreChange = (playerIndex, holeIndex, score) => {
+  const handleScoreChange = async (playerIndex, holeIndex, score) => {
     const updatedScores = [...playerScores];
     updatedScores[playerIndex][holeIndex] =
       score !== '' ? parseInt(score) : null;
     setPlayerScores(updatedScores);
 
+    try {
+      for (const playerName of selectedPlayers) {
+        const playerId = playerName.toLowerCase();
+        console.log('playerId:', playerId);
+        console.log('playerName:', playerName);
+        const womenDocRef = doc(tournamentsCollectionRef, "Women's");
 
+        const scoreKey = `hole${holeIndex + 1}`;
+        const scoreValue = score !== '' ? parseInt(score) : null;
 
+        if (playerId === playerName) {
+          await updateDoc(womenDocRef, {
+            [`scores.${playerId}.${scoreKey}`]: scoreValue,
+          });
+        }
 
-
+        console.log(`Player ${playerName} scores updated successfully!`);
+      }
+    } catch (err) {
+      console.error('Error updating scores:', err);
+    }
   };
 
   const calculateTotal = (playerIndex) => {
@@ -72,10 +89,10 @@ export default function Table({ isFront, scores, selectedPlayers }) {
       <Text style={styles.holeParYards}>{item.yards}</Text>
       <View style={styles.playerInputContainer}>
         {selectedPlayers.map((player, playerIndex) => {
-          const playerScore = playerScores[playerIndex][index];
-          console.log(
-            `Player ${player}: Hole ${item.hole} - Score: ${playerScore}`
-          );
+          // const playerScore = playerScores[playerIndex][index];
+          // console.log(
+          //   `Player ${player}: Hole ${item.hole} - Score: ${playerScore}`
+          // );
 
           return (
             <TextInput
