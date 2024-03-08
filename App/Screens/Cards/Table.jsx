@@ -38,30 +38,29 @@ export default function Table({ isFront, scores, selectedPlayers }) {
     Array.from({ length: selectedPlayers.length }, () => Array(9).fill(''))
   );
 
+  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
+
   const handleScoreChange = async (playerIndex, holeIndex, score) => {
     const updatedScores = [...playerScores];
     updatedScores[playerIndex][holeIndex] =
       score !== '' ? parseInt(score) : null;
     setPlayerScores(updatedScores);
+    setCurrentPlayerIndex(playerIndex);
 
     try {
-      for (const playerName of selectedPlayers) {
-        const playerId = playerName.toLowerCase();
-        console.log('playerId:', playerId);
-        console.log('playerName:', playerName);
-        const womenDocRef = doc(tournamentsCollectionRef, "Women's");
+      const playerId = selectedPlayers[playerIndex].toLowerCase();
+      const scoreKey = `hole${holeIndex + 1}`;
+      const scoreValue = score !== '' ? parseInt(score) : null;
 
-        const scoreKey = `hole${holeIndex + 1}`;
-        const scoreValue = score !== '' ? parseInt(score) : null;
+      const womenDocRef = doc(tournamentsCollectionRef, "Women's");
 
-        if (playerId === playerName) {
-          await updateDoc(womenDocRef, {
-            [`scores.${playerId}.${scoreKey}`]: scoreValue,
-          });
-        }
+      await updateDoc(womenDocRef, {
+        [`scores.${playerId}.${scoreKey}`]: scoreValue,
+      });
 
-        console.log(`Player ${playerName} scores updated successfully!`);
-      }
+      console.log(
+        `Player ${selectedPlayers[playerIndex]} scores updated successfully!`
+      );
     } catch (err) {
       console.error('Error updating scores:', err);
     }
