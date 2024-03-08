@@ -59,10 +59,6 @@ export default function Table({ isFront, scores, selectedPlayers }) {
       await updateDoc(womenDocRef, {
         [`scores.${playerId}.${scoreKey}`]: scoreValue,
       });
-
-      console.log(
-        `Player ${selectedPlayers[playerIndex]} scores updated successfully!`
-      );
     } catch (err) {
       console.error('Error updating scores:', err);
     }
@@ -126,8 +122,6 @@ export default function Table({ isFront, scores, selectedPlayers }) {
       </View>
     </View>
   );
-
-  console.log('Selected Players:', selectedPlayers);
 
   return (
     <View>
