@@ -4,6 +4,7 @@ import { addDoc, collection, doc, setDoc, updateDoc } from 'firebase/firestore';
 import { firebase } from '../../api/firebaseConfig';
 
 export default function Table({ isFront, scores, selectedPlayers }) {
+
   const holesFront = Array.from({ length: 9 }).map((_, index) => index + 1);
   const holesBack = Array.from({ length: 9 }).map((_, index) => index + 10);
 

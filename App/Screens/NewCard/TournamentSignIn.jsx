@@ -37,7 +37,7 @@ export default function TournamentSignIn({ hideModal }) {
 
   useEffect(() => {
     getTournaments();
-  }, [tournamentsCollectionRef]);
+  }, []);
 
   const tournament = () => {
     // Find the selected tournament details when the selectedValue changes
@@ -49,7 +49,7 @@ export default function TournamentSignIn({ hideModal }) {
 
   useEffect(() => {
     tournament();
-  }, [selectedValue]);
+  }, [selectedTournament]);
 
   const signIn = () => {};
 
