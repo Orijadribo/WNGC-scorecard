@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TextInput } from 'react-native';
-import { addDoc, collection, doc, setDoc, updateDoc } from 'firebase/firestore';
+import { collection, doc, updateDoc, deleteField } from 'firebase/firestore';
 import { firebase } from '../../api/firebaseConfig';
 
 export default function Table({ isFront, scores, selectedPlayers }) {
-
   const holesFront = Array.from({ length: 9 }).map((_, index) => index + 1);
   const holesBack = Array.from({ length: 9 }).map((_, index) => index + 10);
 
@@ -35,17 +34,29 @@ export default function Table({ isFront, scores, selectedPlayers }) {
         playerInput: playerInput[index],
       }));
 
-  const [playerScores, setPlayerScores] = useState(
+  const [playerScoresFront, setPlayerScoresFront] = useState(
+    Array.from({ length: selectedPlayers.length }, () => Array(9).fill(''))
+  );
+  const [playerScoresBack, setPlayerScoresBack] = useState(
     Array.from({ length: selectedPlayers.length }, () => Array(9).fill(''))
   );
 
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
 
   const handleScoreChange = async (playerIndex, holeIndex, score) => {
-    const updatedScores = [...playerScores];
-    updatedScores[playerIndex][holeIndex] =
-      score !== '' ? parseInt(score) : null;
-    setPlayerScores(updatedScores);
+    const updatedScoresFront = [...playerScoresFront];
+    const updatedScoresBack = [...playerScoresBack];
+
+    if (isFront) {
+      updatedScoresFront[playerIndex][holeIndex] =
+        score !== '' ? parseInt(score) : null;
+    } else {
+      updatedScoresBack[playerIndex][holeIndex] =
+        score !== '' ? parseInt(score) : null;
+    }
+
+    setPlayerScoresFront(updatedScoresFront);
+    setPlayerScoresBack(updatedScoresBack);
     setCurrentPlayerIndex(playerIndex);
 
     try {
@@ -57,16 +68,23 @@ export default function Table({ isFront, scores, selectedPlayers }) {
 
       const womenDocRef = doc(tournamentsCollectionRef, "Women's");
 
-      await updateDoc(womenDocRef, {
-        [`scores.${playerId}.${scoreKey}`]: scoreValue,
-      });
+      // Update the Firestore document
+      let updateObject = {};
+      if (scoreValue !== null) {
+        updateObject[`scores.${playerId}.${scoreKey}`] = scoreValue;
+      } else {
+        updateObject[`scores.${playerId}.${scoreKey}`] = deleteField();
+      }
+      await updateDoc(womenDocRef, updateObject);
     } catch (err) {
       console.error('Error updating scores:', err);
     }
   };
 
   const calculateTotal = (playerIndex) => {
-    const scores = playerScores[playerIndex] || [];
+    const scores = isFront
+      ? playerScoresFront[playerIndex]
+      : playerScoresBack[playerIndex];
     return scores.reduce((acc, score) => acc + (score || 0), 0);
   };
 
@@ -87,46 +105,41 @@ export default function Table({ isFront, scores, selectedPlayers }) {
       <Text style={styles.holeParYards}>{item.yards}</Text>
       <View style={styles.playerInputContainer}>
         {selectedPlayers.map((player, playerIndex) => {
-          // const playerScore = playerScores[playerIndex][index];
-          // console.log(
-          //   `Player ${player}: Hole ${item.hole} - Score: ${playerScore}`
-          // );
+          const scores = isFront
+            ? playerScoresFront[playerIndex]
+            : playerScoresBack[playerIndex];
 
           return (
             <TextInput
               key={playerIndex}
               keyboardType='numeric'
               style={styles.playerInput}
+              value={scores[index] !== null ? scores[index].toString() : ''}
               onChangeText={(text) =>
                 handleScoreChange(playerIndex, index, text)
               }
             />
           );
         })}
-
-        {/* {Array.from({ length: 4 }).map((_, playerIndex) =>
-          !scores ? (
-            <TextInput
-              key={playerIndex}
-              keyboardType='numeric'
-              style={styles.playerInput}
-              onChangeText={(text) =>
-                handleScoreChange(playerIndex, index, text)
-              }
-            />
-          ) : (
-            <Text key={playerIndex} style={styles.score}>
-              {scores[playerIndex]?.scores?.joseph?.[`hole${item.hole}`]}
-            </Text>
-          )
-        )} */}
       </View>
     </View>
   );
 
+  const calculateFrontAndBackTotal = (playerIndex) => {
+    const frontTotal = playerScoresFront[playerIndex].reduce(
+      (acc, score) => acc + (score || 0),
+      0
+    );
+    const backTotal = playerScoresBack[playerIndex].reduce(
+      (acc, score) => acc + (score || 0),
+      0
+    );
+    return frontTotal + backTotal;
+  };
+
+
   return (
     <View>
-      {/* Table Header  */}
       <View style={styles.tableHeader}>
         <Text style={styles.holeParYardsHeader}>Hole</Text>
         <Text style={styles.holeParYardsHeader}>Par</Text>
@@ -137,49 +150,48 @@ export default function Table({ isFront, scores, selectedPlayers }) {
             {player}
           </Text>
         ))}
-
-        {/* {Array.from({ length: 4 }).map((_, playerIndex) =>
-          scores ? (
-            <Text key={playerIndex} style={styles.player}>
-              {Object.keys(scores[playerIndex]?.scores || {}).map(
-                (playerName) => (
-                  <Text key={playerName}>{playerName}</Text>
-                )
-              )}
-            </Text>
-          ) : (
-            <Text key={playerIndex} style={styles.player}>
-              {selectedPlayers.map((player, playerIndex) => (
-                <Text key={playerIndex} style={styles.player}>
-                  {player}
-                </Text>
-              ))}
-            </Text>
-          )
-        )} */}
       </View>
 
-      {/* Data Row  */}
       <FlatList
         data={rowData}
         keyExtractor={(item) => item.hole.toString()}
         renderItem={renderItem}
       />
 
-      {/* To par */}
       <View style={[styles.tableHeader, (style = { marginBottom: -10 })]}>
         <Text style={styles.holeParYardsHeader}>To Par</Text>
         <Text style={styles.holeParYardsHeader}></Text>
         <Text style={styles.holeParYardsHeader}></Text>
         {renderPlayerScores()}
       </View>
-      {/* Totals  */}
+
       <View style={styles.tableHeader}>
-        <Text style={styles.holeParYardsHeader}>Totals</Text>
+        <Text style={styles.holeParYardsHeader}>
+          {isFront ? 'Front' : 'Back'}
+        </Text>
         <Text style={styles.holeParYardsHeader}>{isFront ? 36 : 35}</Text>
-        <Text style={styles.holeParYardsHeader}>{isFront ? 3600 : 3500}</Text>
+        <Text style={styles.holeParYardsHeader}>
+          {isFront
+            ? yardsFront.reduce((acc, yard) => acc + yard, 0)
+            : yardsBack.reduce((acc, yard) => acc + yard, 0)}
+        </Text>
         {renderPlayerScores()}
       </View>
+      {!isFront && (
+        <View style={styles.tableHeader}>
+          <Text style={styles.holeParYardsHeader}>Total</Text>
+          <Text style={styles.holeParYardsHeader}>71</Text>
+          <Text style={styles.holeParYardsHeader}>
+            {yardsFront.reduce((acc, yard) => acc + yard, 0) +
+              yardsBack.reduce((acc, yard) => acc + yard, 0)}
+          </Text>
+          {selectedPlayers.map((player, playerIndex) => (
+            <Text key={playerIndex} style={styles.player}>
+              {calculateFrontAndBackTotal(playerIndex)}
+            </Text>
+          ))}
+        </View>
+      )}
     </View>
   );
 }
@@ -218,7 +230,6 @@ const styles = StyleSheet.create({
   },
   holeParYards: {
     width: '12%',
-    // borderWidth: 1,
     textAlignVertical: 'center',
     textAlign: 'center',
   },
@@ -235,11 +246,5 @@ const styles = StyleSheet.create({
     padding: 5,
     textAlign: 'center',
     marginHorizontal: 2,
-  },
-  score: {
-    width: '100%',
-    borderWidth: 1,
-    padding: 5,
-    textAlign: 'center',
   },
 });
