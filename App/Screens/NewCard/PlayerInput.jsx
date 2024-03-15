@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     height: '100%',
     paddingHorizontal: 16,
     fontSize: 16,
-    backgroundColor: '#F3F4F8',
+    backgroundColor: '#F0FDF4',
     borderRadius: 10,
   },
   playerOptionsContainer: {

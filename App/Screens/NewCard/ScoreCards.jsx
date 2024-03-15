@@ -28,30 +28,30 @@ const ScoreCards = () => {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row",
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
     marginTop: 20,
     height: 50,
   },
   pickerContainer: {
     flex: 1,
-    backgroundColor: "#F3F4F8",
+    // backgroundColor: '#F0FDF4',
     marginRight: 12,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 12,
-    height: "100%",
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    height: '100%',
   },
   picker: {
     // fontFamily: FONT.regular,
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
     paddingHorizontal: 16,
     fontSize: 16,
-    backgroundColor: "#F3F4F8", // Set background color explicitly
-    borderRadius: 12,
-    marginRight: 24,
+    backgroundColor: '#F0FDF4',
+    borderRadius: 10,
+    marginHorizontal: 24,
   },
 });
 

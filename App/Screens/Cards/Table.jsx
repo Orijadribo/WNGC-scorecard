@@ -159,7 +159,9 @@ export default function Table({ isFront, scores, selectedPlayers }) {
       />
 
       <View style={[styles.tableHeader, (style = { marginBottom: -10 })]}>
-        <Text style={styles.holeParYardsHeader}>To Par</Text>
+        <Text style={[styles.holeParYardsHeader, { fontSize: 14 }]}>
+          To Par
+        </Text>
         <Text style={styles.holeParYardsHeader}></Text>
         <Text style={styles.holeParYardsHeader}></Text>
         {renderPlayerScores()}
@@ -213,6 +215,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     textAlign: 'center',
     justifyContent: 'center',
+    fontSize: 15,
   },
   player: {
     width: '17%',
@@ -226,12 +229,16 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     paddingLeft: 10,
+    paddingVertical: 5,
     marginVertical: 3,
+    backgroundColor: '#F0FFF0',
+    borderRadius: 12,
   },
   holeParYards: {
     width: '12%',
     textAlignVertical: 'center',
     textAlign: 'center',
+    fontSize: 15,
   },
   playerInputContainer: {
     flexDirection: 'row',

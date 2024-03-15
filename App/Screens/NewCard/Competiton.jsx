@@ -55,11 +55,11 @@ const styles = StyleSheet.create({
   },
   pickerContainer: {
     flex: 1,
-    backgroundColor: '#F3F4F8',
+    backgroundColor: '#F0FDF4',
     marginRight: 12,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 12,
+    borderRadius: 10,
     height: '100%',
   },
   picker: {
@@ -68,9 +68,8 @@ const styles = StyleSheet.create({
     height: '100%',
     paddingHorizontal: 16,
     fontSize: 16,
-    backgroundColor: '#F3F4F8', // Set background color explicitly
-    borderWidth: 0, // Set border width to 0 for no border
-    borderRadius: 12,
-    marginRight: 24,
+    backgroundColor: '#F0FDF4',
+    borderRadius: 10,
+    marginHorizontal: 24,
   },
 });

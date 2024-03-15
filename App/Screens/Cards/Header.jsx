@@ -11,11 +11,11 @@ export default function Header() {
         style={styles.backContainer}
         onPress={() => navigation.goBack()}
       >
-        <Ionicons name="chevron-back-outline" size={24} color="black" />
-        <Text>Back</Text>
+        <Ionicons name='chevron-back-outline' size={24} color='black' />
+        <Text style={{ fontSize: 16 }}>Back</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.backContainer}>
-        <Ionicons name="ellipsis-vertical" size={24} color="black" />
+        <Ionicons name='ellipsis-vertical' size={24} color='black' />
       </TouchableOpacity>
     </View>
   );

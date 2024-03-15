@@ -55,10 +55,10 @@ export default function Header({ selectedPlayers,tournamentName }) {
         onPress={() => navigation.goBack()}
       >
         <Ionicons name='chevron-back-outline' size={24} color='black' />
-        <Text>Cancel</Text>
+        <Text style={{ fontSize: 16 }}>Cancel</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={handleNextPress}>
-        <Text>Next</Text>
+        <Text style={{ fontSize: 16 }}>Next</Text>
       </TouchableOpacity>
     </View>
   );

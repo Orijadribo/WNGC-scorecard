@@ -32,30 +32,30 @@ export default function EmptyCard({ route }) {
   const { tournamentName } = route.params;
 
   return (
-    <View style={{ flex: 1, paddingHorizontal: 20 }}>
-      <Header />
-      <View style={styles.titleContainer}>
-        <View>
+      <View style={{ flex: 1, paddingHorizontal: 20 }}>
+        <Header />
+        <View style={styles.titleContainer}>
           <View>
-            <Text>{tournamentName}</Text>
-            <Text>{formattedDate}</Text>
+            <View>
+              <Text style={{ fontSize: 20 }}>{tournamentName}</Text>
+              <Text style={{ fontSize: 15 }}>{formattedDate}</Text>
+            </View>
+          </View>
+          <View style={styles.frontBackContainer}>
+            <TouchableOpacity onPress={() => setIsFront(true)}>
+              <Text style={[styles.frontBack, isFront && styles.selectedText]}>
+                Front
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setIsFront(false)}>
+              <Text style={[styles.frontBack, !isFront && styles.selectedText]}>
+                Back
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.frontBackContainer}>
-          <TouchableOpacity onPress={() => setIsFront(true)}>
-            <Text style={[styles.frontBack, isFront && styles.selectedText]}>
-              Front
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setIsFront(false)}>
-            <Text style={[styles.frontBack, !isFront && styles.selectedText]}>
-              Back
-            </Text>
-          </TouchableOpacity>
-        </View>
+        <Table isFront={isFront} selectedPlayers={selectedPlayers} />
       </View>
-      <Table isFront={isFront} selectedPlayers={selectedPlayers} />
-    </View>
   );
 }
 
@@ -70,15 +70,18 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     gap: 10,
-    backgroundColor: 'red',
-    padding: 10,
+    backgroundColor: '#C4E8C2',
+    padding: 5,
     borderRadius: 10,
   },
   frontBack: {
     padding: 10,
     borderRadius: 5,
+    textAlign: 'center',
   },
   selectedText: {
-    backgroundColor: 'blue',
+    backgroundColor: '#6BBD99',
+    fontSize: 16,
+    alignItems: 'center',
   },
 });

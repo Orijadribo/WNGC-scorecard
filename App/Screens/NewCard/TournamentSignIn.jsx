@@ -39,23 +39,7 @@ export default function TournamentSignIn({ hideModal, setTournamentName }) {
     getTournaments();
   }, []);
 
-  // const tournament = () => {
-  //   // Find the selected tournament details when the selectedValue changes
-  //   const selectedTournamentDetails = tournamentSignIn.find(
-  //     (tournament) => tournament.id === selectedValue
-  //   );
-  //   setSelectedTournament(selectedTournamentDetails);
-  // };
-
-  // useEffect(() => {
-  //   tournament();
-  // }, [selectedValue]);
-
   const signIn = () => {};
-
-  // if (selectedTournament) {
-  //   setTournamentName(selectedTournament.id);
-  // }
 
   return (
     <View style={{ flex: 1, paddingHorizontal: 20 }}>
@@ -65,7 +49,7 @@ export default function TournamentSignIn({ hideModal, setTournamentName }) {
           onPress={() => hideModal()}
         >
           <Ionicons name='chevron-back-outline' size={24} color='black' />
-          <Text>Back</Text>
+          <Text style={{ fontSize: 16 }}>Back</Text>
         </TouchableOpacity>
       </View>
       {/* Heading  */}
@@ -73,6 +57,12 @@ export default function TournamentSignIn({ hideModal, setTournamentName }) {
       {/* Tournament data  */}
       <Picker
         selectedValue={selectedValue}
+        itemStyle={{
+          fontSize: 16,
+          marginTop: 10,
+          fontSize: 16,
+          borderWidth: 1,
+        }}
         onValueChange={(itemValue, itemIndex) => {
           setSelectedValue(itemValue);
           const selectedTournamentDetails = tournamentSignIn.find(
@@ -82,11 +72,6 @@ export default function TournamentSignIn({ hideModal, setTournamentName }) {
           if (selectedTournamentDetails) {
             setTournamentName(selectedTournamentDetails.id);
           }
-        }}
-        style={styles.picker}
-        itemStyle={{
-          fontSize: 16,
-          borderWidth: 1,
         }}
       >
         <Picker.Item
@@ -107,10 +92,14 @@ export default function TournamentSignIn({ hideModal, setTournamentName }) {
       {/* Display selected tournament details */}
       {selectedTournament && (
         <View style={styles.tournamentDetails}>
-          <Text style={{ marginVertical: 10 }}>Tournament Selected</Text>
-          <Text>{selectedTournament.id}</Text>
-          <Text>Date: {selectedTournament.date}</Text>
-          <Text>Details: {selectedTournament.details}</Text>
+          
+          {/* <Text style={{ fontSize: 20, marginVertical: 10 }}>
+            {selectedTournament.id}
+          </Text> */}
+          <Text style={{ fontSize: 16 }}>Date: {selectedTournament.date}</Text>
+          <Text style={{ fontSize: 16 }}>
+            Details: {selectedTournament.details}
+          </Text>
         </View>
       )}
       <View style={styles.signInButton}>
@@ -147,9 +136,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
     borderRadius: 15,
   },
-  picker: {
-    marginTop: 10,
-  },
+  // picker: {
+   
+  // },
   tournamentDetails: {
     marginVertical: 20,
   },

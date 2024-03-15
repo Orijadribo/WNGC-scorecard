@@ -16,7 +16,7 @@ export default function Header({ navigation }) {
         <Text style={{ fontSize: 30, padding: 10 }}>WNGC</Text>
       </View>
       <View style={styles.navBar}>
-        <Text>ScoreCards</Text>
+        <Text style={{ fontSize: 20}}>ScoreCards</Text>
         <View style={styles.navBarIcons}>
           <TouchableOpacity onPress={() => navigation.navigate('addCard')}>
             <FontAwesome6 name='plus' size={24} color='black' />

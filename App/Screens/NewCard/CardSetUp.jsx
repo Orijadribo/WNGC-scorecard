@@ -47,12 +47,12 @@ export default function CardSetUp() {
   }, [competitonSelected]);
 
   return (
-    <KeyboardAvoidingView
-      enabled
-      behavior={Platform.OS === 'ios' ? 'padding' : null}
-    >
-      <ScrollView>
-        <View style={{ flex: 1, paddingHorizontal: 20 }}>
+    // <KeyboardAvoidingView
+    //   enabled
+    //   behavior={Platform.OS === 'ios' ? 'padding' : null}
+    // >
+      // <ScrollView>
+        <View style={{ flex: 1, paddingHorizontal: 20, backgroundColor:'white' }}>
           <Header
             selectedPlayers={selectedPlayers}
             tournamentName={tournamentName}
@@ -116,8 +116,8 @@ export default function CardSetUp() {
             <ScoreCards />
           </View>
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      // {/* </ScrollView> */}
+    // {/* // </KeyboardAvoidingView> */}
   );
 }
 
