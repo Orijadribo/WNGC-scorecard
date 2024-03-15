@@ -23,6 +23,7 @@ export default function CardSetUp() {
   const [playerThree, setPlayerThree] = useState('');
   const [playerFour, setPlayerFour] = useState('');
   const [selectedPlayers, setSelectedPlayers] = useState([]);
+  const [tournamentName, setTournamentName] = useState('');
 
   const playersCollectionRef = collection(firebase.firestore(), 'players');
 
@@ -47,12 +48,18 @@ export default function CardSetUp() {
 
   return (
     <View style={{ flex: 1, paddingHorizontal: 20 }}>
-      <Header selectedPlayers={selectedPlayers} />
+      <Header
+        selectedPlayers={selectedPlayers}
+        tournamentName={tournamentName}
+      />
 
       {/* Competition  */}
       <View style={styles.heading}>
         <Text style={{ fontSize: 24 }}>Competition</Text>
-        <Competiton setCompetitonSelected={setCompetitonSelected} />
+        <Competiton
+          setCompetitonSelected={setCompetitonSelected}
+          setTournamentName={setTournamentName}
+        />
       </View>
 
       {/* Add scorecard  */}

@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { addDoc, collection, doc, setDoc, updateDoc } from 'firebase/firestore';
 import { firebase } from '../../api/firebaseConfig';
 
-export default function Header({ selectedPlayers }) {
+export default function Header({ selectedPlayers,tournamentName }) {
   const navigation = useNavigation();
 
   const tournamentsCollectionRef = collection(
@@ -20,11 +20,11 @@ export default function Header({ selectedPlayers }) {
         await Promise.all(
           selectedPlayers.map(async (playerName) => {
             const playerId = playerName.toLowerCase();
-            const womenDocRef = doc(tournamentsCollectionRef, "Women's");
+            const tournamentDocRef = doc(tournamentsCollectionRef, tournamentName);
 
-            // Update the specific field in the 'Women's' document
+            // Update the specific field in the 'tournament document
                await setDoc(
-                 womenDocRef,
+                 tournamentDocRef,
                  {
                    scores: {
                      [playerId]: {
@@ -38,7 +38,7 @@ export default function Header({ selectedPlayers }) {
             console.log(`Player ${playerName} scores updated successfully!`);
           })
         );
-        navigation.push('emptyCard', { selectedPlayers });
+        navigation.push('emptyCard', { selectedPlayers, tournamentName });
       } catch (err) {
         console.error('Error updating scores:', err);
       }

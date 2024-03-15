@@ -29,6 +29,7 @@ export default function EmptyCard({ route }) {
   const formattedDate = `${day} ${month} ${year}`;
 
   const { selectedPlayers } = route.params;
+  const { tournamentName } = route.params;
 
   return (
     <View style={{ flex: 1, paddingHorizontal: 20 }}>
@@ -36,7 +37,7 @@ export default function EmptyCard({ route }) {
       <View style={styles.titleContainer}>
         <View>
           <View>
-            <Text>Casual Round</Text>
+            <Text>{tournamentName}</Text>
             <Text>{formattedDate}</Text>
           </View>
         </View>

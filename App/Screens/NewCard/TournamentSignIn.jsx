@@ -12,7 +12,7 @@ import {
 } from 'firebase/firestore';
 import { firebase } from '../../api/firebaseConfig';
 
-export default function TournamentSignIn({ hideModal }) {
+export default function TournamentSignIn({ hideModal, setTournamentName }) {
   const [tournamentSignIn, setTournamentSignIn] = useState([]);
   const [selectedValue, setSelectedValue] = useState('');
   const [selectedTournament, setSelectedTournament] = useState(null);
@@ -39,19 +39,23 @@ export default function TournamentSignIn({ hideModal }) {
     getTournaments();
   }, []);
 
-  const tournament = () => {
-    // Find the selected tournament details when the selectedValue changes
-    const selectedTournamentDetails = tournamentSignIn.find(
-      (tournament) => tournament.id === selectedValue
-    );
-    setSelectedTournament(selectedTournamentDetails);
-  };
+  // const tournament = () => {
+  //   // Find the selected tournament details when the selectedValue changes
+  //   const selectedTournamentDetails = tournamentSignIn.find(
+  //     (tournament) => tournament.id === selectedValue
+  //   );
+  //   setSelectedTournament(selectedTournamentDetails);
+  // };
 
-  useEffect(() => {
-    tournament();
-  }, [selectedTournament]);
+  // useEffect(() => {
+  //   tournament();
+  // }, [selectedValue]);
 
   const signIn = () => {};
+
+  // if (selectedTournament) {
+  //   setTournamentName(selectedTournament.id);
+  // }
 
   return (
     <View style={{ flex: 1, paddingHorizontal: 20 }}>
@@ -69,7 +73,16 @@ export default function TournamentSignIn({ hideModal }) {
       {/* Tournament data  */}
       <Picker
         selectedValue={selectedValue}
-        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+        onValueChange={(itemValue, itemIndex) => {
+          setSelectedValue(itemValue);
+          const selectedTournamentDetails = tournamentSignIn.find(
+            (tournament) => tournament.id === itemValue
+          );
+          setSelectedTournament(selectedTournamentDetails);
+          if (selectedTournamentDetails) {
+            setTournamentName(selectedTournamentDetails.id);
+          }
+        }}
         style={styles.picker}
         itemStyle={{
           fontSize: 16,
