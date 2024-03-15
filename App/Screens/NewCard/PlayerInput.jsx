@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { Platform } from 'react-native';
 import {
   Text,
   TextInput,
   TouchableOpacity,
   View,
   StyleSheet,
-  KeyboardAvoidingView,
 } from 'react-native';
 
 const PlayerInput = ({
@@ -17,12 +15,21 @@ const PlayerInput = ({
   onPlayerSelect,
 }) => {
   const [inputValue, setInputValue] = useState('');
+  const [filteredPlayers, setFilteredPlayers] = useState([]);
   const [showPlayerOptions, setShowPlayerOptions] = useState(false);
 
   const handleInputChange = (text) => {
     setInputValue(text);
     setShowPlayerOptions(true); // Show options when typing
     onInputChange(player, text);
+
+    // Filter players based on input text
+    const filtered = playersAvailable.filter(
+      (player) =>
+        player.firstName.toLowerCase().includes(text.toLowerCase()) ||
+        player.lastName.toLowerCase().includes(text.toLowerCase())
+    );
+    setFilteredPlayers(filtered);
   };
 
   const handlePlayerSelect = (selectedPlayer) => {
@@ -30,18 +37,20 @@ const PlayerInput = ({
       `${selectedPlayer.firstName} ${selectedPlayer.lastName} (${selectedPlayer.handicapIndex})`
     );
     setShowPlayerOptions(false); // Hide options after selecting
-    onPlayerSelect(
-      player,
-      `${selectedPlayer.firstName}`
-    );
+    onPlayerSelect(player, `${selectedPlayer.firstName}`);
+  };
+
+  const handleInputBlur = () => {
+    // Hide options when input loses focus
+    setShowPlayerOptions(false);
   };
 
   const renderPlayerOptions = () => {
-    if (!showPlayerOptions) {
-      return null; // Don't render options if showPlayerOptions is false
+    if (!showPlayerOptions || filteredPlayers.length === 0) {
+      return null; // Don't render options if showPlayerOptions is false or no filtered players
     }
 
-    return playersAvailable.map((player) => (
+    return filteredPlayers.map((player) => (
       <TouchableOpacity
         key={player.id}
         onPress={() => handlePlayerSelect(player)}
@@ -56,17 +65,14 @@ const PlayerInput = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.innerContainer}>
-        <TextInput
-          value={inputValue}
-          onChangeText={handleInputChange}
-          placeholder={`${player} ${optional}`}
-          style={styles.textInput}
-        />
-        <View style={styles.playerOptionsContainer}>
-          {renderPlayerOptions()}
-        </View>
-      </View>
+      <TextInput
+        value={inputValue}
+        onChangeText={handleInputChange}
+        onBlur={handleInputBlur}
+        placeholder={`${player} ${optional}`}
+        style={styles.textInput}
+      />
+      <View style={styles.playerOptionsContainer}>{renderPlayerOptions()}</View>
     </View>
   );
 };
@@ -75,22 +81,17 @@ export default PlayerInput;
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
     marginTop: 20,
     height: 50,
   },
-  innerContainer: {
-    flex: 1,
-    position: 'relative',
-  },
   textInput: {
-    // fontFamily: FONT.regular,
     width: '100%',
     height: '100%',
     paddingHorizontal: 16,
     fontSize: 16,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 10,
   },
   playerOptionsContainer: {
     position: 'absolute',
