@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     fontSize: 16,
     backgroundColor: "#F3F4F8", // Set background color explicitly
-    borderWidth: 0, // Set border width to 0 for no border
     borderRadius: 12,
     marginRight: 24,
   },
