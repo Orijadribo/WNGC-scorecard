@@ -47,70 +47,77 @@ export default function CardSetUp() {
   }, [competitonSelected]);
 
   return (
-    <View style={{ flex: 1, paddingHorizontal: 20 }}>
-      <Header
-        selectedPlayers={selectedPlayers}
-        tournamentName={tournamentName}
-      />
+    <KeyboardAvoidingView
+      enabled
+      behavior={Platform.OS === 'ios' ? 'padding' : null}
+    >
+      <ScrollView>
+        <View style={{ flex: 1, paddingHorizontal: 20 }}>
+          <Header
+            selectedPlayers={selectedPlayers}
+            tournamentName={tournamentName}
+          />
 
-      {/* Competition  */}
-      <View style={styles.heading}>
-        <Text style={{ fontSize: 24 }}>Competition</Text>
-        <Competiton
-          setCompetitonSelected={setCompetitonSelected}
-          setTournamentName={setTournamentName}
-        />
-      </View>
+          {/* Competition  */}
+          <View style={styles.heading}>
+            <Text style={{ fontSize: 24 }}>Competition</Text>
+            <Competiton
+              setCompetitonSelected={setCompetitonSelected}
+              setTournamentName={setTournamentName}
+            />
+          </View>
 
-      {/* Add scorecard  */}
-      <View style={styles.heading}>
-        <Text style={{ fontSize: 24 }}>Select a ScoreCard</Text>
-        <ScoreCards />
-      </View>
+          {/* Add players  */}
+          <View style={styles.heading}>
+            {/* Each player field to have a leading icon */}
+            <Text style={{ fontSize: 24 }}>Add Players</Text>
 
-      {/* Add players  */}
-      <View style={styles.heading}>
-        {/* Each player field to have a leading icon */}
-        <Text style={{ fontSize: 24 }}>Add Players</Text>
+            <PlayerInput
+              player={'Player 1'}
+              optional={''}
+              playersAvailable={playersAvailable}
+              onInputChange={(player, inputValue) => setPlayerOne(inputValue)}
+              onPlayerSelect={(player, playerName) =>
+                setSelectedPlayers([...selectedPlayers, playerName])
+              }
+            />
+            <PlayerInput
+              player={'Player 2'}
+              optional={''}
+              playersAvailable={playersAvailable}
+              onInputChange={(player, inputValue) => setPlayerTwo(inputValue)}
+              onPlayerSelect={(player, playerName) =>
+                setSelectedPlayers([...selectedPlayers, playerName])
+              }
+            />
+            <PlayerInput
+              player={'Player 3'}
+              optional={' (Optional)'}
+              playersAvailable={playersAvailable}
+              onInputChange={(player, inputValue) => setPlayerThree(inputValue)}
+              onPlayerSelect={(player, playerName) =>
+                setSelectedPlayers([...selectedPlayers, playerName])
+              }
+            />
+            <PlayerInput
+              player={'Player 4'}
+              optional={' (Optional)'}
+              playersAvailable={playersAvailable}
+              onInputChange={(player, inputValue) => setPlayerFour(inputValue)}
+              onPlayerSelect={(player, playerName) =>
+                setSelectedPlayers([...selectedPlayers, playerName])
+              }
+            />
+          </View>
 
-        <PlayerInput
-          player={'Player 1'}
-          optional={''}
-          playersAvailable={playersAvailable}
-          onInputChange={(player, inputValue) => setPlayerOne(inputValue)}
-          onPlayerSelect={(player, playerName) =>
-            setSelectedPlayers([...selectedPlayers, playerName])
-          }
-        />
-        <PlayerInput
-          player={'Player 2'}
-          optional={''}
-          playersAvailable={playersAvailable}
-          onInputChange={(player, inputValue) => setPlayerTwo(inputValue)}
-          onPlayerSelect={(player, playerName) =>
-            setSelectedPlayers([...selectedPlayers, playerName])
-          }
-        />
-        <PlayerInput
-          player={'Player 3'}
-          optional={' (Optional)'}
-          playersAvailable={playersAvailable}
-          onInputChange={(player, inputValue) => setPlayerThree(inputValue)}
-          onPlayerSelect={(player, playerName) =>
-            setSelectedPlayers([...selectedPlayers, playerName])
-          }
-        />
-        <PlayerInput
-          player={'Player 4'}
-          optional={' (Optional)'}
-          playersAvailable={playersAvailable}
-          onInputChange={(player, inputValue) => setPlayerFour(inputValue)}
-          onPlayerSelect={(player, playerName) =>
-            setSelectedPlayers([...selectedPlayers, playerName])
-          }
-        />
-      </View>
-    </View>
+          {/* Add scorecard  */}
+          <View style={styles.heading}>
+            <Text style={{ fontSize: 24 }}>Select a ScoreCard</Text>
+            <ScoreCards />
+          </View>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
