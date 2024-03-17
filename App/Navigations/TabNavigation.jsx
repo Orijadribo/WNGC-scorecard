@@ -15,11 +15,11 @@ const Tab = createBottomTabNavigator();
 export default function TabNavigation() {
   return (
     <Tab.Navigator
-      screenOptions={{ headerShown: false, tabBarActiveTintColor: "red" }}
-      initialRouteName="Home"
+      screenOptions={{ headerShown: false, tabBarActiveTintColor: '#0B6623' }}
+      initialRouteName='Home'
     >
       <Tab.Screen
-        name="Players"
+        name='Players'
         component={Players}
         options={{
           tabBarLabel: ({ color }) => (
@@ -28,12 +28,12 @@ export default function TabNavigation() {
             </Text>
           ),
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome6 name="people-group" size={size} color={color} />
+            <FontAwesome6 name='people-group' size={size} color={color} />
           ),
         }}
       />
       <Tab.Screen
-        name="Home"
+        name='Home'
         component={HomeScreen}
         options={{
           tabBarLabel: ({ color }) => (
@@ -42,12 +42,12 @@ export default function TabNavigation() {
             </Text>
           ),
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="home" size={size} color={color} />
+            <FontAwesome name='home' size={size} color={color} />
           ),
         }}
       />
       <Tab.Screen
-        name="Course"
+        name='Course'
         component={Course}
         options={{
           tabBarLabel: ({ color }) => (
@@ -56,7 +56,7 @@ export default function TabNavigation() {
             </Text>
           ),
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="golf-course" size={size} color={color} />
+            <MaterialIcons name='golf-course' size={size} color={color} />
           ),
         }}
       />

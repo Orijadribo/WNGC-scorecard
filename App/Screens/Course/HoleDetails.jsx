@@ -4,6 +4,7 @@ import {
   Text,
   View,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import React from 'react';
 import { courseDetails } from '../../Data/course';
@@ -25,7 +26,8 @@ export default function HoleDetails() {
               <Text>Par {hole.par}</Text>
               <Text>Yards {hole.yards}</Text>
             </View>
-            <Text>{hole.img}</Text>
+            <Image source={hole.img} style={styles.image} />
+            {/* <Text>{hole.img}</Text> */}
             {/* <Text>{hole.hole}</Text> */}
           </TouchableOpacity>
         )}
@@ -46,4 +48,5 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   text: {},
+  image: { width: 100, height: 100, objectFit: 'contain' },
 });

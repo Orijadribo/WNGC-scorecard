@@ -1,3 +1,5 @@
+import { hole3 } from '../../assets/holeImages/holeImages';
+
 export const courseDetails = [
   {
     hole: 1,
@@ -17,7 +19,7 @@ export const courseDetails = [
     hole: 3,
     par: 3,
     yards: 300,
-    img: 'img',
+    img: hole3,
     green: '',
   },
   {
