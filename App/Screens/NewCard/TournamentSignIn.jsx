@@ -39,14 +39,20 @@ export default function TournamentSignIn({ hideModal, setTournamentName }) {
     getTournaments();
   }, []);
 
-  const signIn = () => {};
+  const signIn = () => {
+    hideModal();
+  };
 
   return (
     <View style={{ flex: 1, paddingHorizontal: 20 }}>
       <View style={styles.headerContainer}>
         <TouchableOpacity
           style={styles.backContainer}
-          onPress={() => hideModal()}
+          onPress={() => {
+            hideModal();
+            setSelectedValue('');
+            setSelectedTournament(null);
+          }}
         >
           <Ionicons name='chevron-back-outline' size={24} color='black' />
           <Text style={{ fontSize: 16 }}>Back</Text>
@@ -55,51 +61,55 @@ export default function TournamentSignIn({ hideModal, setTournamentName }) {
       {/* Heading  */}
       <Text style={{ fontSize: 24, marginTop: 10 }}>Tournament SignIn</Text>
       {/* Tournament data  */}
-      <Picker
-        selectedValue={selectedValue}
-        itemStyle={{
-          fontSize: 16,
-          marginTop: 10,
-          fontSize: 16,
-          borderWidth: 1,
-        }}
-        onValueChange={(itemValue, itemIndex) => {
-          setSelectedValue(itemValue);
-          const selectedTournamentDetails = tournamentSignIn.find(
-            (tournament) => tournament.id === itemValue
-          );
-          setSelectedTournament(selectedTournamentDetails);
-          if (selectedTournamentDetails) {
-            setTournamentName(selectedTournamentDetails.id);
-          }
-        }}
-      >
-        <Picker.Item
-          value='Choose an option'
-          key='Choose an option'
-          label='Choose an option'
+      <View style={styles.pickerContainer}>
+        <Picker
+          selectedValue={selectedValue}
+          style={styles.picker}
+          itemStyle={{
+            fontSize: 16,
+            marginTop: 10,
+          }}
+          onValueChange={(itemValue, itemIndex) => {
+            setSelectedValue(itemValue);
+            const selectedTournamentDetails = tournamentSignIn.find(
+              (tournament) => tournament.id === itemValue
+            );
+            setSelectedTournament(selectedTournamentDetails);
+            if (selectedTournamentDetails) {
+              setTournamentName(selectedTournamentDetails.id);
+            }
+          }}
         >
-          -- Choose an option --
-        </Picker.Item>
-        {tournamentSignIn.map((tournament) => (
           <Picker.Item
-            key={tournament.id}
-            label={tournament.id}
-            value={tournament.id}
-          />
-        ))}
-      </Picker>
+            value='Choose an option'
+            key='Choose an option'
+            label='Choose an option'
+          >
+            -- Choose an option --
+          </Picker.Item>
+          {tournamentSignIn.map((tournament) => (
+            <Picker.Item
+              key={tournament.id}
+              label={tournament.id}
+              value={tournament.id}
+            />
+          ))}
+        </Picker>
+      </View>
       {/* Display selected tournament details */}
       {selectedTournament && (
         <View style={styles.tournamentDetails}>
-          
           {/* <Text style={{ fontSize: 20, marginVertical: 10 }}>
             {selectedTournament.id}
           </Text> */}
-          <Text style={{ fontSize: 16 }}>Date: {selectedTournament.date}</Text>
-          <Text style={{ fontSize: 16 }}>
-            Details: {selectedTournament.details}
-          </Text>
+          <View style={{ display: 'flex', flexDirection: 'row' }}>
+            <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Date: </Text>
+            <Text style={{ fontSize: 16 }}> {selectedTournament.date}</Text>
+          </View>
+          <View style={{ display: 'flex', flexDirection: 'row' }}>
+            <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Details: </Text>
+            <Text style={{ fontSize: 16 }}>{selectedTournament.details}</Text>
+          </View>
         </View>
       )}
       <View style={styles.signInButton}>
@@ -136,10 +146,20 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
     borderRadius: 15,
   },
-  // picker: {
-   
-  // },
-  tournamentDetails: {
+  pickerContainer: {
     marginVertical: 20,
+  },
+  picker: {
+    // fontFamily: FONT.regular,
+    // width: '100%',a
+    // height: '100%',
+    paddingHorizontal: 16,
+    fontSize: 16,
+    backgroundColor: '#F0FDF4',
+    borderRadius: 10,
+    marginVertical: 20,
+  },
+  tournamentDetails: {
+    marginBottom: 20,
   },
 });

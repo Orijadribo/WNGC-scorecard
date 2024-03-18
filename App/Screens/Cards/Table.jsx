@@ -3,7 +3,12 @@ import { View, Text, StyleSheet, FlatList, TextInput } from 'react-native';
 import { collection, doc, updateDoc, deleteField } from 'firebase/firestore';
 import { firebase } from '../../api/firebaseConfig';
 
-export default function Table({ isFront, scores, selectedPlayers }) {
+export default function Table({
+  isFront,
+  scores,
+  selectedPlayers,
+  tournamentName,
+}) {
   const holesFront = Array.from({ length: 9 }).map((_, index) => index + 1);
   const holesBack = Array.from({ length: 9 }).map((_, index) => index + 10);
 
@@ -66,7 +71,7 @@ export default function Table({ isFront, scores, selectedPlayers }) {
       }`;
       const scoreValue = score !== '' ? parseInt(score) : null;
 
-      const womenDocRef = doc(tournamentsCollectionRef, "Women's");
+      const womenDocRef = doc(tournamentsCollectionRef, tournamentName);
 
       // Update the Firestore document
       let updateObject = {};
@@ -137,16 +142,39 @@ export default function Table({ isFront, scores, selectedPlayers }) {
     return frontTotal + backTotal;
   };
 
-
   return (
     <View>
       <View style={styles.tableHeader}>
-        <Text style={styles.holeParYardsHeader}>Hole</Text>
-        <Text style={styles.holeParYardsHeader}>Par</Text>
-        <Text style={styles.holeParYardsHeader}>Yards</Text>
+        <Text
+          style={[
+            styles.holeParYardsHeader,
+            { color: '#b8b8b8', fontWeight: 'bold' },
+          ]}
+        >
+          Hole
+        </Text>
+        <Text
+          style={[
+            styles.holeParYardsHeader,
+            { color: '#b8b8b8', fontWeight: 'bold' },
+          ]}
+        >
+          Par
+        </Text>
+        <Text
+          style={[
+            styles.holeParYardsHeader,
+            { color: '#b8b8b8', fontWeight: 'bold' },
+          ]}
+        >
+          Yards
+        </Text>
 
         {selectedPlayers.map((player, playerIndex) => (
-          <Text key={playerIndex} style={styles.player}>
+          <Text
+            key={playerIndex}
+            style={[styles.player, { color: '#b8b8b8', fontWeight: 'bold' }]}
+          >
             {player}
           </Text>
         ))}
@@ -158,7 +186,7 @@ export default function Table({ isFront, scores, selectedPlayers }) {
         renderItem={renderItem}
       />
 
-      <View style={[styles.tableHeader, (style = { marginBottom: -10 })]}>
+      <View style={[styles.totals, { marginBottom: -10, marginTop: 10 }]}>
         <Text style={[styles.holeParYardsHeader, { fontSize: 14 }]}>
           To Par
         </Text>
@@ -167,7 +195,7 @@ export default function Table({ isFront, scores, selectedPlayers }) {
         {renderPlayerScores()}
       </View>
 
-      <View style={styles.tableHeader}>
+      <View style={styles.totals}>
         <Text style={styles.holeParYardsHeader}>
           {isFront ? 'Front' : 'Back'}
         </Text>
@@ -180,7 +208,7 @@ export default function Table({ isFront, scores, selectedPlayers }) {
         {renderPlayerScores()}
       </View>
       {!isFront && (
-        <View style={styles.tableHeader}>
+        <View style={[styles.totals, { marginTop: -0 }]}>
           <Text style={styles.holeParYardsHeader}>Total</Text>
           <Text style={styles.holeParYardsHeader}>71</Text>
           <Text style={styles.holeParYardsHeader}>
@@ -202,11 +230,21 @@ const styles = StyleSheet.create({
   tableHeader: {
     display: 'flex',
     flexDirection: 'row',
-    borderWidth: 1,
+    padding: 10,
+    paddingVertical: 20,
+    marginTop: 20,
+    marginBottom: 7,
+    borderRadius: 7,
+    backgroundColor: '#0B6623',
+  },
+  totals: {
+    display: 'flex',
+    flexDirection: 'row',
     padding: 10,
     marginTop: 20,
     marginBottom: 7,
     borderRadius: 7,
+    backgroundColor: '#39a355',
   },
   holeParYardsHeader: {
     width: '12%',
@@ -224,6 +262,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
+    fontSize: 15,
   },
   row: {
     display: 'flex',
@@ -250,6 +289,7 @@ const styles = StyleSheet.create({
     width: '100%',
     borderWidth: 1,
     borderRadius: 7,
+    borderColor: '#7a8c7a',
     padding: 5,
     textAlign: 'center',
     marginHorizontal: 2,

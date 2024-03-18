@@ -54,7 +54,7 @@ export default function EmptyCard({ route }) {
             </TouchableOpacity>
           </View>
         </View>
-        <Table isFront={isFront} selectedPlayers={selectedPlayers} />
+        <Table isFront={isFront} selectedPlayers={selectedPlayers} tournamentName={tournamentName}/>
       </View>
   );
 }
