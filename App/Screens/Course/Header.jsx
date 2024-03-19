@@ -13,7 +13,7 @@ export default function Header() {
 
   return (
     <View style={styles.container}>
-      <Text>Course Details</Text>
+      <Text style={{ fontSize: 24, marginTop: 10 }}>Course Details</Text>
       {/* <View style={styles.navBarIcons}>
         <TouchableOpacity>
           <FontAwesome6 name='plus' size={24} color='black' />
@@ -38,7 +38,6 @@ export default function Header() {
           </View>
         </View>
       </View> */}
-      
     </View>
   );
 }

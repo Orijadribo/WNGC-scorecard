@@ -86,11 +86,44 @@ export default function Table({
     }
   };
 
+const calculateToPar = (playerIndex) => {
+  const scores = isFront
+    ? playerScoresFront[playerIndex]
+    : playerScoresBack[playerIndex];
+  const pars = isFront ? parsFront : parsBack;
+
+  let totalToPar = 0;
+
+  for (let i = 0; i < scores.length; i++) {
+    const score = scores[i];
+    const par = pars[i];
+
+    if (score !== '') {
+      const holeScore = score - par;
+      totalToPar += Number.isFinite(holeScore) ? holeScore : 0;
+    } 
+  }
+
+  return totalToPar;
+};
+
+
+
   const calculateTotal = (playerIndex) => {
     const scores = isFront
       ? playerScoresFront[playerIndex]
       : playerScoresBack[playerIndex];
     return scores.reduce((acc, score) => acc + (score || 0), 0);
+  };
+
+  const renderPlayerScoreToPar = () => {
+    return Array.from({ length: selectedPlayers.length }).map(
+      (_, playerIndex) => (
+        <Text key={playerIndex} style={styles.player}>
+          {calculateToPar(playerIndex)}
+        </Text>
+      )
+    );
   };
 
   const renderPlayerScores = () => {
@@ -192,7 +225,7 @@ export default function Table({
         </Text>
         <Text style={styles.holeParYardsHeader}></Text>
         <Text style={styles.holeParYardsHeader}></Text>
-        {renderPlayerScores()}
+        {renderPlayerScoreToPar()}
       </View>
 
       <View style={styles.totals}>
@@ -244,7 +277,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 7,
     borderRadius: 7,
-    backgroundColor: '#39a355',
+    backgroundColor: '#92a697',
   },
   holeParYardsHeader: {
     width: '12%',
